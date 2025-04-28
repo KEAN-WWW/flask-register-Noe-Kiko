@@ -21,5 +21,5 @@ def registration():
             user.save()
             return redirect(url_for("authentication.dashboard", name="dash"))
         else:
-            flash("You have already registered!")
+            flash("Already Registered")
     return render_template('registration.html',form=form)
