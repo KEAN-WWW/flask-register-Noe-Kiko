@@ -12,6 +12,14 @@ def dashboard():
 
 @authentication.route('/registration', methods=['POST', 'GET'])
 def registration():
-    return
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user_check = User.find_user_by_email(form.email.data)
 
-
+        if user_check is None:
+            user = User.create(form.email.data, form.password.data)
+            user.save()
+            return redirect(url_for("authentication.dashboard", name="dash"))
+        else:
+            flash("You have already registered!")
+    return render_template('registration.html',form=form)
